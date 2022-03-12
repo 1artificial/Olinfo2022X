@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+//ifstream fin("---.in");
+//ofstream fout("---.out");
+int v[10001], b[10001];
+
+void sortare(int st, int dr)
+{
+    if(st>=dr){
+        return ;
+    }
+    else{
+        int mij = (st+dr)/2;
+        sortare(st,mij);
+        sortare(mij + 1, dr);
+        int ind1=st; int ind2=mij + 1; int ind0 = 0;
+        while(ind1<= mij && ind2 <= dr)
+        {
+            if(v[ind1]<=v[ind2])
+                b[++ind0] = v[ind1++];
+            else
+                b[++ind0] = v[ind2++];
+        }
+        while(ind1<=mij)
+            b[++ind0] = v[ind1++];
+        while(ind2<=dr)
+            b[++ind0] = v[ind2++];
+        for(int i=st; i<=dr; ++i)
+            v[i]=b[i-st+1];
+    }
+}
+
+int main()
+{   
+    int n;
+    cin>>n;
+    for(int i=1; i<=n; ++i)
+        cin>>v[i];
+    sortare(1,n);
+    for(int i=1; i<=n; ++i, cout<<endl)
+        cout<<v[i];
+    return 0;
+}
